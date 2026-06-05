@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCcw, List, ScrollText, Clock } from 'lucide-react';
+import { List, ScrollText, Clock } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import { PHASE_INFO, phaseRank } from '../../types/game';
 import { useLeaderboard } from '../../hooks/useLeaderboard';
@@ -24,6 +24,8 @@ export default function ResultsScreen() {
   const isWinner = !state.isEliminated;
 
   useEffect(() => {
+    if (state.hasSavedScore) return;
+
     // Save to leaderboard
     save({
       name: state.playerName,
@@ -32,10 +34,11 @@ export default function ResultsScreen() {
       penaltyMs: state.penaltyMs,
       eliminated: state.isEliminated,
     });
-    if (isWinner) playVictory();
-  }, []); // eslint-disable-line
+    dispatch({ type: 'MARK_SCORE_SAVED' });
 
-  const handleRestart = () => dispatch({ type: 'RESTART' });
+    if (isWinner) playVictory();
+  }, [state.hasSavedScore, state.playerName, state.phase, state.totalElapsedMs, state.penaltyMs, state.isEliminated, isWinner, save, playVictory, dispatch]);
+
   const handleLeaderboard = () => dispatch({ type: 'GO_TO_SCREEN', payload: 'leaderboard' });
   const handlePergamino = () => dispatch({ type: 'GO_TO_SCREEN', payload: 'pergamino' });
 
@@ -160,14 +163,6 @@ export default function ResultsScreen() {
               focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
             <List size={18} />
             Ver Ranking 🏅
-          </button>
-          <button onClick={handleRestart}
-            aria-label="Jugar de nuevo"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-base cursor-pointer
-              bg-green-700 text-white hover:bg-green-600 transition-colors
-              focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400">
-            <RotateCcw size={18} />
-            Jugar de Nuevo
           </button>
         </div>
       </motion.div>
