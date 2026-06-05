@@ -9,6 +9,10 @@ interface OptionButtonProps {
 }
 
 export default function OptionButton({ text, index, selected, disabled, onSelect }: OptionButtonProps) {
+  const match = text.match(/^([A-Z]\))\s*(.*)$/);
+  const label = match ? match[1] : '';
+  const rest = match ? match[2] : text;
+
   return (
     <motion.button
       onClick={() => !disabled && onSelect(index)}
@@ -16,8 +20,8 @@ export default function OptionButton({ text, index, selected, disabled, onSelect
       whileHover={!disabled ? { scale: 1.02 } : {}}
       whileTap={!disabled ? { scale: 0.98 } : {}}
       className={`
-        w-full text-left px-5 py-4 rounded-xl border-2 transition-all duration-200
-        font-medium text-base min-h-[56px] leading-snug
+        w-full text-left px-4 py-2.5 rounded-xl border-2 transition-all duration-200
+        text-sm sm:text-base min-h-[52px] leading-snug
         focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400
         ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}
         ${selected
@@ -28,7 +32,14 @@ export default function OptionButton({ text, index, selected, disabled, onSelect
       aria-label={`Opción ${String.fromCharCode(65 + index)}: ${text}`}
       aria-pressed={selected}
     >
-      {text}
+      {label ? (
+        <>
+          <span className={selected ? 'font-semibold text-yellow-300' : 'font-semibold text-slate-200'}>{label} </span>
+          <span className="font-normal text-current">{rest}</span>
+        </>
+      ) : (
+        text
+      )}
     </motion.button>
   );
 }

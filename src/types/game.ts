@@ -93,7 +93,7 @@ export const PHASE_INFO: Record<Phase, PhaseInfo> = {
     color: 'text-green-400',
     bgColor: 'bg-green-900/40',
     borderColor: 'border-green-500',
-    questionCount: 3,
+    questionCount: 8,
     next: 'octavos',
   },
   octavos: {
@@ -102,7 +102,7 @@ export const PHASE_INFO: Record<Phase, PhaseInfo> = {
     color: 'text-amber-500',
     bgColor: 'bg-amber-900/40',
     borderColor: 'border-amber-500',
-    questionCount: 3,
+    questionCount: 6,
     next: 'cuartos',
   },
   cuartos: {
@@ -111,7 +111,7 @@ export const PHASE_INFO: Record<Phase, PhaseInfo> = {
     color: 'text-slate-300',
     bgColor: 'bg-slate-700/40',
     borderColor: 'border-slate-400',
-    questionCount: 3,
+    questionCount: 4,
     next: 'semifinal',
   },
   semifinal: {

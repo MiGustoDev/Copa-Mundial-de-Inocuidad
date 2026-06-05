@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Trophy, Users, Shield } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, Users } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import { DEFAULT_SETTINGS } from '../../store/useGameStore';
 import SoccerBall from '../ui/SoccerBall';
-import type { GameSettings } from '../../types/game';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,11 +34,11 @@ const itemVariants = {
 export default function StartScreen() {
   const { dispatch } = useGameStore();
   const [name, setName] = useState('');
-  const [settings, setSettings] = useState<GameSettings>(DEFAULT_SETTINGS);
+  const [isRulesOpen, setIsRulesOpen] = useState(false);
 
   const handleStart = () => {
     if (!name.trim()) return;
-    dispatch({ type: 'START_GAME', payload: { name, settings } });
+    dispatch({ type: 'START_GAME', payload: { name, settings: DEFAULT_SETTINGS } });
   };
 
   return (
@@ -66,10 +65,10 @@ export default function StartScreen() {
 
         {/* Title */}
         <motion.div variants={itemVariants} className="text-center">
-          <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight">
             La Copa Mundial
           </h1>
-          <h1 className="text-3xl sm:text-4xl font-black leading-tight"
+          <h1 className="text-2xl sm:text-3xl font-black leading-tight"
             style={{ background: 'linear-gradient(90deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             de la Inocuidad
           </h1>
@@ -78,20 +77,21 @@ export default function StartScreen() {
           </p>
         </motion.div>
 
-        {/* Gold quote */}
-        <motion.div variants={itemVariants}
-          className="flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 rounded-xl px-4 py-3 text-center">
-          <Trophy size={18} className="text-yellow-400 flex-shrink-0" />
-          <p className="text-yellow-300 text-sm font-semibold italic">
-            "La Copa más importante se juega todos los días"
-          </p>
+        <motion.div variants={itemVariants} className="w-full flex justify-center">
+          <button
+            type="button"
+            onClick={() => setIsRulesOpen(true)}
+            className="rounded-full border border-slate-700 bg-slate-900/80 px-5 py-2.5 text-sm font-semibold text-slate-100 shadow-lg shadow-slate-950/50 hover:border-yellow-400 hover:text-yellow-300 transition"
+          >
+            Ver reglas del juego
+          </button>
         </motion.div>
 
         {/* Stats strip */}
         <motion.div variants={itemVariants} className="grid grid-cols-3 gap-3 w-full">
           {[
             { icon: '🏟️', label: '5 Fases', sub: 'Eliminatorias' },
-            { icon: '❓', label: '12 Preguntas', sub: 'De Inocuidad' },
+            { icon: '❓', label: '21 Preguntas', sub: 'De Inocuidad' },
             { icon: '🏆', label: 'Gran Final', sub: 'Argumental' },
           ].map((s) => (
             <div key={s.label} className="bg-slate-800/60 border border-slate-700 rounded-xl p-3 text-center">
@@ -133,7 +133,7 @@ export default function StartScreen() {
             whileHover={name.trim() ? { scale: 1.02 } : {}}
             whileTap={name.trim() ? { scale: 0.97 } : {}}
             aria-label="Comenzar partido"
-            className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-black text-lg transition-all duration-300
+            className={`w-auto min-w-[180px] mx-auto flex items-center justify-center gap-3 px-6 py-3 rounded-xl font-black text-sm sm:text-base transition-all duration-300
               focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400
               ${name.trim()
                 ? 'bg-gradient-to-r from-green-600 to-green-500 text-white shadow-lg shadow-green-900/50 hover:shadow-green-900/80 cursor-pointer'
@@ -149,6 +149,52 @@ export default function StartScreen() {
           Día Mundial de la Inocuidad Alimentaria · 7 de Junio
         </motion.p>
       </motion.div>
+
+      <AnimatePresence>
+        {isRulesOpen && (
+          <motion.div
+            className="fixed inset-0 z-20 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <motion.div
+              className="w-full max-w-3xl rounded-[32px] border border-slate-700/70 bg-slate-900/95 p-6 shadow-2xl shadow-slate-950/30"
+              initial={{ opacity: 0, y: 28, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex flex-col gap-5">
+                <div>
+                  <h2 className="text-xl font-black text-white">Reglas del juego</h2>
+                  <p className="mt-2 text-slate-400 text-sm">Lee con atención antes de comenzar tu recorrido por la copa.</p>
+                </div>
+
+                <div className="rounded-[32px] border border-slate-700/70 bg-slate-800/80 p-5 text-slate-200">
+                  <p className="text-white font-semibold mb-4">Reglas:</p>
+                  <ul className="space-y-3 list-disc list-inside text-slate-300">
+                    <li>Cada pregunta tiene una única respuesta correcta.</li>
+                    <li>La dificultad aumenta en cada etapa.</li>
+                    <li>En caso de empate en la final, se podrá solicitar fundamentación técnica de la respuesta.</li>
+                  </ul>
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setIsRulesOpen(false)}
+                    className="rounded-full bg-yellow-400 px-5 py-2.5 text-sm text-slate-950 font-semibold shadow-lg shadow-yellow-500/20 transition-colors duration-200 hover:bg-yellow-300"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

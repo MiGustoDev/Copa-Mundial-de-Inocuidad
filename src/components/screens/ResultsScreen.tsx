@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCcw, List, ScrollText, Clock } from 'lucide-react';
+import { RotateCcw, List, Clock } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import { PHASE_INFO, phaseRank } from '../../types/game';
 import { useLeaderboard } from '../../hooks/useLeaderboard';
 import { useSound } from '../../hooks/useSound';
 import ConfettiEffect from '../ui/ConfettiEffect';
+import { getNameWithGenderEmoji } from '../../utils/nameGender';
 
 function getStars(phase: string, eliminated: boolean): number {
   if (eliminated) return 1;
@@ -22,6 +23,7 @@ export default function ResultsScreen() {
   const phaseInfo = PHASE_INFO[state.phase];
   const stars = getStars(state.phase, state.isEliminated);
   const isWinner = !state.isEliminated;
+  const displayName = getNameWithGenderEmoji(state.playerName);
 
   useEffect(() => {
     // Save to leaderboard
@@ -37,7 +39,6 @@ export default function ResultsScreen() {
 
   const handleRestart = () => dispatch({ type: 'RESTART' });
   const handleLeaderboard = () => dispatch({ type: 'GO_TO_SCREEN', payload: 'leaderboard' });
-  const handlePergamino = () => dispatch({ type: 'GO_TO_SCREEN', payload: 'pergamino' });
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden"
@@ -62,17 +63,17 @@ export default function ResultsScreen() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 250, damping: 18, delay: 0.2 }}
-            className="text-7xl mb-3"
+            className="text-6xl mb-3"
           >
             {isWinner ? '🏆' : '❌'}
           </motion.div>
-          <h1 className="text-3xl font-black text-white mb-1">
+          <h1 className="text-2xl sm:text-3xl font-black text-white mb-1">
             {isWinner ? '¡Felicitaciones!' : 'Partido Terminado'}
           </h1>
-          <p className="text-slate-400">
+          <p className="text-slate-200 text-base sm:text-base font-semibold">
             {isWinner
-              ? `¡${state.playerName} completó el torneo!`
-              : `${state.playerName} fue eliminado en ${phaseInfo.label}`}
+              ? `¡${displayName} completó el torneo!`
+              : `${displayName} fue eliminado en ${phaseInfo.label}`}
           </p>
         </div>
 
@@ -113,7 +114,7 @@ export default function ResultsScreen() {
               <Clock size={28} className="text-blue-400" />
             </div>
             <p className="text-slate-400 text-xs font-semibold uppercase tracking-wide">Tiempo total</p>
-            <p className="font-bold text-white font-mono text-lg mt-1">{formatTime(totalMs)}</p>
+            <p className="font-bold text-white font-mono text-base sm:text-lg mt-1">{formatTime(totalMs)}</p>
             {state.penaltyMs > 0 && (
               <p className="text-orange-400 text-xs">+{formatTime(state.penaltyMs)} penalización</p>
             )}
@@ -145,17 +146,9 @@ export default function ResultsScreen() {
 
         {/* Action buttons */}
         <div className="flex flex-col gap-3">
-          <button onClick={handlePergamino}
-            aria-label="Ver Pergamino del Compromiso"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-base cursor-pointer
-              bg-gradient-to-r from-amber-700 to-yellow-600 text-white
-              focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">
-            <ScrollText size={18} />
-            Ver Pergamino del Compromiso 📜
-          </button>
           <button onClick={handleLeaderboard}
             aria-label="Ver ranking"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-base cursor-pointer
+            className="w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base cursor-pointer
               bg-slate-700 text-white border border-slate-600 hover:bg-slate-600 transition-colors
               focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
             <List size={18} />
@@ -163,7 +156,7 @@ export default function ResultsScreen() {
           </button>
           <button onClick={handleRestart}
             aria-label="Jugar de nuevo"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-base cursor-pointer
+            className="w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base cursor-pointer
               bg-green-700 text-white hover:bg-green-600 transition-colors
               focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400">
             <RotateCcw size={18} />

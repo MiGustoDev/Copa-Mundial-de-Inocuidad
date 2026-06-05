@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { PHASE_INFO } from '../../types/game';
 import type { Phase } from '../../types/game';
 
@@ -9,30 +10,27 @@ interface PhaseHeaderProps {
 
 export default function PhaseHeader({ phase, questionIndex, totalQuestions }: PhaseHeaderProps) {
   const info = PHASE_INFO[phase];
+  const progress = Math.min(100, ((questionIndex + 1) / totalQuestions) * 100);
+
   return (
-    <div className="flex items-center justify-between mb-6">
-      {/* Phase badge */}
-      <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border ${info.bgColor} ${info.borderColor}`}>
+    <div className="flex items-center gap-4 mb-6 w-full flex-nowrap">
+      <div className={`flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-full border ${info.bgColor} ${info.borderColor}`}>
         <span className="text-xl">{info.icon}</span>
         <span className={`text-sm font-semibold ${info.color}`}>{info.label}</span>
       </div>
-      {/* Question counter */}
-      <div className="flex items-center gap-1.5">
-        {Array.from({ length: totalQuestions }, (_, i) => (
-          <div
-            key={i}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              i < questionIndex
-                ? 'bg-green-500 w-5'
-                : i === questionIndex
-                ? 'bg-yellow-400 w-5 animate-pulse'
-                : 'bg-slate-600 w-2.5'
-            }`}
+
+      <div className="relative flex-1 min-w-0">
+        <div className="h-3 rounded-full bg-slate-800 overflow-hidden border border-slate-700">
+          <motion.div
+            className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-lime-400 to-amber-400 shadow-[0_0_20px_rgba(132,204,22,0.16)]"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           />
-        ))}
-        <span className="ml-2 text-sm text-slate-400 font-medium">
+        </div>
+        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-end pr-1 text-[11px] font-semibold text-slate-200/90">
           {questionIndex + 1}/{totalQuestions}
-        </span>
+        </div>
       </div>
     </div>
   );

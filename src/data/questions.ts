@@ -3,135 +3,236 @@ import type { Question, Phase } from '../types/game';
 // ── Fase de Grupos ────────────────────────────────────────────────────────────
 export const faseGrupos: Question[] = [
   {
-    pregunta: '¿Cuál es el principal objetivo de la inocuidad alimentaria?',
+    pregunta: '¿Cuál es el objetivo principal de la inocuidad alimentaria?',
     tipo: 'opciones',
     opciones: [
-      'A) Que el producto sea más barato',
-      'B) Que el alimento no cause daño al consumidor',
-      'C) Que tenga mejor sabor',
+      'A) Garantizar que el producto mantenga sus características sensoriales durante toda su vida útil.',
+      'B) Garantizar que el alimento no cause daño al consumidor cuando se prepare y/o consuma según su uso previsto.',
+      'C) Garantizar que el producto cumpla con las especificaciones comerciales acordadas con el cliente.',
     ],
     correcta: 1,
-    explicacion: 'El objetivo principal es proteger la salud del consumidor garantizando que el alimento sea seguro.',
+    explicacion: 'El objetivo principal es proteger al consumidor asegurando que el alimento sea seguro en su uso previsto.',
   },
   {
-    pregunta: '¿Cuándo debemos lavarnos las manos?',
+    pregunta: '¿Cuándo debe realizarse el lavado y sanitización de manos?',
     tipo: 'opciones',
     opciones: [
-      'A) Solo al ingresar',
-      'B) Antes de comenzar y cada vez que exista riesgo de contaminación',
-      'C) Solo después del almuerzo',
+      'A) Al inicio de la jornada y después de utilizar sanitarios.',
+      'B) Antes de comenzar las tareas, después de interrupciones y siempre que exista riesgo de contaminación.',
+      'C) Al ingresar a producción y al finalizar el turno.',
     ],
     correcta: 1,
-    explicacion: 'El lavado de manos debe ser antes de comenzar y ante cualquier riesgo de contaminación.',
+    explicacion: 'El lavado y sanitización deben hacerse antes de iniciar tareas, tras interrupciones y siempre que haya riesgo de contaminación.',
   },
   {
-    pregunta: '¿Qué hacemos si un elemento cae al piso?',
+    pregunta: '¿Qué tipo de peligro representa la presencia de un fragmento metálico en un alimento?',
     tipo: 'opciones',
     opciones: [
-      'A) Lo usamos igual',
-      'B) Lo limpiamos según procedimiento o lo descartamos según corresponda',
-      'C) Lo guarda otro compañero',
+      'A) Peligro químico.',
+      'B) Peligro físico.',
+      'C) Peligro microbiológico.',
     ],
     correcta: 1,
-    explicacion: 'Debe seguirse el procedimiento de limpieza o descarte adecuado según el tipo de elemento.',
+    explicacion: 'Un fragmento metálico en el alimento es un peligro físico que puede causar daño al consumidor.',
+  },
+  {
+    pregunta: '¿Qué acción corresponde si un utensilio cae al piso durante la producción?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Limpiarlo visualmente y volver a utilizarlo.',
+      'B) Retirarlo temporalmente hasta el próximo cambio de producto.',
+      'C) Retirarlo del proceso y aplicar el procedimiento de limpieza y sanitización antes de reutilizarlo.',
+    ],
+    correcta: 2,
+    explicacion: 'El utensilio debe retirarse y limpiarse/sanitizarse antes de volver a utilizarlo.',
+  },
+  {
+    pregunta: '¿Qué representan las siglas BPM?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Buenas Prácticas de Manufactura.',
+      'B) Base de Procesos de Manufactura.',
+      'C) Buenas Prácticas de Monitoreo.',
+    ],
+    correcta: 0,
+    explicacion: 'BPM significa Buenas Prácticas de Manufactura y son fundamentales para la inocuidad.',
+  },
+  {
+    pregunta: '¿Qué se entiende por contaminación cruzada?',
+    tipo: 'opciones',
+    opciones: [
+      'A) La transferencia involuntaria de peligros biológicos, químicos o físicos desde una fuente contaminada hacia un alimento o superficie apta.',
+      'B) El contacto entre dos materias primas diferentes durante la producción.',
+      'C) La mezcla accidental de productos pertenecientes a distintos lotes.',
+    ],
+    correcta: 0,
+    explicacion: 'La contaminación cruzada es la transferencia involuntaria de peligros desde una fuente contaminada a un alimento o superficie.',
+  },
+  {
+    pregunta: '¿Cuál es el principal objetivo del uso correcto del barbijo en un establecimiento elaborador de alimentos?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Evitar que el operador inhale partículas suspendidas en el ambiente.',
+      'B) Reducir el riesgo de contaminación del alimento mediante la retención de gotas respiratorias emitidas por el manipulador.',
+      'C) Cumplir con los requisitos de indumentaria establecidos por la empresa.',
+    ],
+    correcta: 1,
+    explicacion: 'El barbijo ayuda a reducir la contaminación del alimento por gotas respiratorias emitidas por el manipulador.',
+  },
+  {
+    pregunta: '¿Cuál es la finalidad principal de los registros operativos?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Permitir el seguimiento de los costos asociados al proceso.',
+      'B) Servir como evidencia objetiva de que los controles fueron realizados y cumplieron los requisitos establecidos.',
+      'C) Facilitar la planificación de la producción diaria.',
+    ],
+    correcta: 1,
+    explicacion: 'Los registros operativos son evidencia objetiva de que los controles se realizaron y cumplieron los requisitos.',
   },
 ];
 
 // ── Octavos de Final ──────────────────────────────────────────────────────────
 export const octavos: Question[] = [
   {
-    pregunta: '¿Qué es una contaminación cruzada?',
+    pregunta: '¿Qué es un Punto Crítico de Control (PCC)?',
     tipo: 'opciones',
     opciones: [
-      'A) Cuando dos jugadores se cruzan en la cancha',
-      'B) Transferencia de microorganismos de un alimento/objeto a otro',
-      'C) Cuando se mezcla limpieza con desinfección',
+      'A) Una etapa donde puede aplicarse una medida de control esencial para prevenir, eliminar o reducir un peligro significativo a un nivel aceptable.',
+      'B) Una etapa donde se realiza una inspección visual obligatoria.',
+      'C) Una etapa donde se registran los parámetros más importantes del proceso.',
     ],
-    correcta: 1,
-    explicacion: 'La contaminación cruzada es la transferencia de patógenos entre alimentos, superficies o equipos.',
+    correcta: 0,
+    explicacion: 'Un PCC es una etapa donde se aplica una medida esencial para controlar un peligro significativo.',
   },
   {
-    pregunta: '¿Por qué se utilizan cofias y barbijos?',
+    pregunta: '¿Cuál es la diferencia entre limpieza y sanitización?',
     tipo: 'opciones',
     opciones: [
-      'A) Por moda en la industria',
-      'B) Para evitar contaminación por cabello y gotículas respiratorias',
-      'C) Solo para cumplir con la normativa',
+      'A) La limpieza elimina suciedad visible y la sanitización reduce los microorganismos a niveles aceptables.',
+      'B) La limpieza elimina microorganismos y la sanitización elimina residuos orgánicos.',
+      'C) La sanitización reemplaza a la limpieza cuando se utilizan productos químicos autorizados.',
     ],
-    correcta: 1,
-    explicacion: 'Protegen contra contaminación por cabello, saliva y partículas respiratorias sobre los alimentos.',
+    correcta: 0,
+    explicacion: 'La limpieza elimina suciedad visible y la sanitización reduce microorganismos a niveles aceptables.',
   },
   {
-    pregunta: '¿Qué debe hacerse ante una rotura de vidrio o plástico duro?',
+    pregunta: 'Durante una producción, el detector de metales rechaza un producto. ¿Qué corresponde hacer?',
     tipo: 'opciones',
     opciones: [
-      'A) Continuar trabajando y limpiar después',
-      'B) Detener producción, aislar área, limpiar completamente y revisar producto',
-      'C) Solo barrer los trozos grandes',
+      'A) Reprocesar el producto rechazado para verificar si la falla persiste.',
+      'B) Retener el producto rechazado e iniciar la investigación definida en el procedimiento.',
+      'C) Continuar produciendo y verificar el detector al finalizar el turno.',
     ],
     correcta: 1,
-    explicacion: 'Se debe detener la producción inmediatamente para evitar contaminar el producto con fragmentos.',
+    explicacion: 'Hay que retener el producto rechazado e iniciar la investigación según el procedimiento.',
+  },
+  {
+    pregunta: '¿Cuál es el objetivo principal de la trazabilidad?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Conocer el recorrido completo de materias primas, materiales y productos terminados a lo largo de la cadena productiva.',
+      'B) Determinar los costos asociados a cada lote elaborado.',
+      'C) Controlar el stock disponible en depósitos y cámaras.',
+    ],
+    correcta: 0,
+    explicacion: 'La trazabilidad busca conocer el recorrido completo de materias primas, materiales y productos a lo largo de la cadena.',
+  },
+  {
+    pregunta: 'Se detecta una pérdida de lubricante en un equipo que está en funcionamiento. ¿Cuál es la acción más adecuada?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Continuar operando mientras el lubricante no entre en contacto visible con el producto.',
+      'B) Detener la operación y evaluar el riesgo de contaminación química sobre el producto elaborado.',
+      'C) Registrar el hallazgo y programar la reparación para el siguiente turno.',
+    ],
+    correcta: 1,
+    explicacion: 'Se debe detener la operación y evaluar el riesgo de contaminación química en el producto.',
+  },
+  {
+    pregunta: '¿Qué define mejor una no conformidad?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Una situación que podría generar una mejora futura.',
+      'B) Un incumplimiento de un requisito establecido por un procedimiento, norma o especificación.',
+      'C) Un hallazgo detectado durante una auditoría externa.',
+    ],
+    correcta: 1,
+    explicacion: 'Una no conformidad es un incumplimiento de un requisito establecido por un procedimiento, norma o especificación.',
   },
 ];
 
 // ── Cuartos de Final ──────────────────────────────────────────────────────────
 export const cuartos: Question[] = [
   {
-    pregunta: 'Un operario encuentra suciedad en un equipo antes de iniciar producción. ¿Qué debe hacer?',
+    pregunta: 'Durante una recorrida se encuentra una arandela metálica en el piso junto a una línea que está produciendo. ¿Cuál es la mejor decisión?',
     tipo: 'opciones',
     opciones: [
-      'A) Iniciar producción igual y limpiar después',
-      'B) Limpiar y desinfectar el equipo antes de usarlo',
-      'C) Avisar al supervisor y esperar indefinidamente',
+      'A) Retirar la arandela y solicitar a mantenimiento que verifique el equipo al finalizar la producción.',
+      'B) Verificar visualmente el producto elaborado y continuar operando.',
+      'C) Detener la operación, identificar el origen de la pieza y evaluar el posible impacto sobre el producto elaborado.',
     ],
-    correcta: 1,
-    explicacion: 'El equipo debe estar limpio y desinfectado antes de cualquier proceso de producción.',
+    correcta: 2,
+    explicacion: 'La mejor decisión es detener la operación, identificar el origen y evaluar el impacto sobre el producto.',
   },
   {
-    pregunta: "¿Qué significa 'si no está documentado, no existe'?",
+    pregunta: 'Un lote permaneció fuera de refrigeración más tiempo que el máximo permitido por procedimiento. ¿Qué corresponde?',
     tipo: 'opciones',
     opciones: [
-      'A) Que lo no escrito no importa',
-      'B) Que en inocuidad, todo procedimiento debe estar registrado y documentado',
-      'C) Que solo lo digital cuenta',
+      'A) Enfriarlo nuevamente y continuar con el proceso.',
+      'B) Retener el lote y realizar una evaluación de riesgo según los criterios establecidos por la empresa.',
+      'C) Liberarlo si no presenta alteraciones visibles.',
     ],
     correcta: 1,
-    explicacion: 'En sistemas de inocuidad, la documentación es evidencia de que se cumplió el procedimiento.',
+    explicacion: 'El lote debe retenerse y evaluarse el riesgo según los criterios establecidos.',
   },
   {
-    pregunta: '¿Cuál es la diferencia entre limpieza y desinfección?',
+    pregunta: '¿Por qué es importante investigar la causa raíz de una no conformidad?',
     tipo: 'opciones',
     opciones: [
-      'A) No hay diferencia, son lo mismo',
-      'B) Limpieza quita suciedad visible; desinfección reduce microorganismos a nivel seguro',
-      'C) Limpieza es con agua; desinfección es con químicos solamente',
+      'A) Porque permite identificar al responsable del incidente.',
+      'B) Porque facilita el cierre documental de la no conformidad.',
+      'C) Porque permite implementar acciones correctivas eficaces para evitar la recurrencia del problema.',
     ],
-    correcta: 1,
-    explicacion: 'Limpieza remueve suciedad orgánica visible; desinfección elimina o reduce patógenos a niveles seguros.',
+    correcta: 2,
+    explicacion: 'Investigar la causa raíz permite implementar acciones correctivas eficaces para evitar recurrencias.',
+  },
+  {
+    pregunta: '¿Qué representa una desviación en un Punto Crítico de Control?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Una situación que puede comprometer la inocuidad del producto y requiere una respuesta inmediata.',
+      'B) Una variación normal dentro del proceso productivo.',
+      'C) Una observación que debe revisarse durante la auditoría interna.',
+    ],
+    correcta: 0,
+    explicacion: 'Una desviación en un PCC puede comprometer la inocuidad y requiere una respuesta inmediata.',
   },
 ];
 
 // ── Semifinal ─────────────────────────────────────────────────────────────────
 export const semifinal: Question[] = [
   {
-    pregunta:
-      'Caso práctico: Durante la producción observas un pallet apoyado contra una pared húmeda. ¿Qué riesgo existe y qué acción tomarías?',
+    pregunta: 'Durante el control preoperacional se observa desprendimiento de pintura en una estructura ubicada sobre una línea lista para comenzar la producción. ¿Cuál es la acción más adecuada?',
     tipo: 'opciones',
     opciones: [
-      'A) No hay riesgo, continuar trabajando',
-      'B) Riesgo de contaminación por humedad/moho; separar pallet de pared, secar área y reportar',
-      'C) Solo mover el pallet sin limpiar',
+      'A) Iniciar la producción y programar la reparación para el siguiente paro de planta.',
+      'B) Limpiar la zona afectada e iniciar la producción con monitoreos reforzados.',
+      'C) No iniciar la producción, aislar el área afectada, corregir la condición y verificar la eliminación del riesgo antes de liberar la línea.',
     ],
-    correcta: 1,
-    explicacion:
-      'La humedad en paredes puede generar moho y contaminación. Se debe separar, secar el área y reportar el desvío.',
+    correcta: 2,
+    explicacion: 'No debe iniciarse la producción; primero hay que aislar, corregir la condición y verificar la eliminación del riesgo.',
   },
   {
-    pregunta: '¿Quién es responsable de la inocuidad alimentaria?',
+    pregunta: 'Durante la verificación rutinaria, el detector de metales falla la prueba con la probeta patrón. ¿Cuál es la acción correcta?',
     tipo: 'opciones',
-    opciones: ['A) Calidad', 'B) Sanidad', 'C) Todos los colaboradores'],
-    correcta: 2,
-    explicacion: 'La inocuidad es responsabilidad de TODOS los colaboradores, no solo de un departamento.',
+    opciones: [
+      'A) Ajustar el detector y continuar produciendo desde ese momento.',
+      'B) Detener la línea, retener todo el producto elaborado desde la última verificación satisfactoria y gestionar la desviación según procedimiento.',
+      'C) Repetir la prueba al finalizar el turno para confirmar el resultado.',
+    ],
+    correcta: 1,
+    explicacion: 'Se debe detener la línea, retener el producto desde la última verificación satisfactoria y gestionar la desviación.',
   },
 ];
 
@@ -139,12 +240,16 @@ export const semifinal: Question[] = [
 export const granFinal: Question[] = [
   {
     pregunta:
-      "Completar la frase: 'La inocuidad alimentaria comienza con ___________ y termina con ___________.'",
-    tipo: 'abierta',
-    instruccion:
-      'No hay una única respuesta correcta; gana quien argumente mejor. Escribe tu respuesta completa y fundamentada.',
+      'Son las 18:00 hs y un camión espera para retirar un pedido completo. Durante una inspección previa al despacho se detecta que falta una tuerca de una mezcladora utilizada en la elaboración del lote. Luego de revisar el equipo no puede demostrarse dónde se encuentra la pieza ni descartarse que haya ingresado al producto. El lote ya está elaborado, envasado y listo para despachar.\n\n¿Cuál es la decisión más adecuada?',
+    tipo: 'opciones',
+    opciones: [
+      'A) Despachar el lote debido a que no existe evidencia de que la tuerca haya ingresado al producto y la entrega no puede demorarse.',
+      'B) Retener únicamente las cajas producidas al final del proceso y despachar el resto del lote.',
+      'C) Bloquear el despacho, retener la totalidad del lote, investigar el destino de la pieza faltante y liberar únicamente si existe evidencia objetiva de que el producto es inocuo.',
+    ],
+    correcta: 2,
     explicacion:
-      'Ejemplo: "La inocuidad alimentaria comienza con la prevención y termina con la satisfacción del consumidor."',
+      'La opción correcta prioriza la inocuidad y exige evidencia objetiva antes de liberar el producto.',
   },
 ];
 

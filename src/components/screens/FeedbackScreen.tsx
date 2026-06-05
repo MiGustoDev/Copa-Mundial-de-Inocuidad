@@ -116,7 +116,7 @@ export default function FeedbackScreen() {
           <button
             onClick={handleSecondChance}
             aria-label="Usar segunda oportunidad"
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base cursor-pointer
+            className="w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base cursor-pointer
               bg-orange-600 hover:bg-orange-500 text-white transition-colors
               focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
           >
@@ -129,7 +129,7 @@ export default function FeedbackScreen() {
         <button
           onClick={handleContinue}
           aria-label={continueLabel}
-          className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base cursor-pointer
+          className={`w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base cursor-pointer
             ${continueClass} text-white transition-colors
             focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400`}
         >

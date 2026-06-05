@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Printer, Plus, X } from 'lucide-react';
+import { ArrowLeft, Printer, X } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import {
   PERGAMINO_INTRO,
@@ -9,18 +9,10 @@ import {
   PERGAMINO_LEMA,
 } from '../../data/questions';
 
-const MAX_SIGNATURES = 24;
-
 export default function PergaminoScreen() {
   const { state, dispatch } = useGameStore();
   const [signatures, setSignatures] = useState<string[]>([state.playerName || '']);
   const printRef = useRef<HTMLDivElement>(null);
-
-  const addSignature = () => {
-    if (signatures.length < MAX_SIGNATURES) {
-      setSignatures(s => [...s, '']);
-    }
-  };
 
   const updateSignature = (idx: number, val: string) => {
     setSignatures(s => s.map((v, i) => (i === idx ? val : v)));
@@ -181,7 +173,7 @@ export default function PergaminoScreen() {
       {/* Print CTA bottom */}
       <div className="max-w-3xl mx-auto mt-6 flex justify-center print:hidden">
         <button onClick={handlePrint} aria-label="Imprimir"
-          className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-base cursor-pointer
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base cursor-pointer
             bg-gradient-to-r from-amber-700 to-yellow-600 text-white
             hover:from-amber-600 hover:to-yellow-500 transition-all shadow-lg
             focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">

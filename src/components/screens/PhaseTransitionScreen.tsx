@@ -66,8 +66,8 @@ export default function PhaseTransitionScreen() {
           <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">
             ¡Fase superada!
           </p>
-          <h2 className="text-3xl font-black text-white mb-1">{currentInfo.label}</h2>
-          <p className="text-green-400 font-semibold">completada con éxito ✅</p>
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-1">{currentInfo.label}</h2>
+          <p className="text-green-400 font-semibold text-sm">completada con éxito ✅</p>
         </div>
 
         {/* Next phase card */}
@@ -89,8 +89,8 @@ export default function PhaseTransitionScreen() {
             <div className="flex items-center justify-center gap-3">
               <span className="text-5xl">{nextInfo.icon}</span>
               <div className="text-left">
-                <p className={`text-2xl font-black ${nextInfo.color}`}>{nextInfo.label}</p>
-                <p className="text-slate-400 text-sm">
+                <p className={`text-xl sm:text-2xl font-black ${nextInfo.color}`}>{nextInfo.label}</p>
+                <p className="text-slate-400 text-xs sm:text-sm">
                   {nextInfo.questionCount} pregunta{nextInfo.questionCount !== 1 ? 's' : ''}
                 </p>
               </div>
@@ -102,7 +102,7 @@ export default function PhaseTransitionScreen() {
         <button
           onClick={handleContinue}
           aria-label="Continuar al siguiente partido"
-          className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-lg cursor-pointer
+          className="w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base cursor-pointer
             bg-gradient-to-r from-yellow-500 to-yellow-400 text-slate-900
             hover:from-yellow-400 hover:to-yellow-300 transition-all
             focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"

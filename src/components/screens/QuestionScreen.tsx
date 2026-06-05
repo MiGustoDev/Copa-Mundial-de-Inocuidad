@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import { useGameStore, useCurrentQuestion } from '../../store/useGameStore';
@@ -8,6 +8,7 @@ import OptionButton from '../ui/OptionButton';
 import GlobalTimer from '../ui/GlobalTimer';
 import { useTimer } from '../../hooks/useTimer';
 import { useSound } from '../../hooks/useSound';
+import { getNameWithGenderEmoji } from '../../utils/nameGender';
 
 export default function QuestionScreen() {
   const { state, dispatch } = useGameStore();
@@ -19,8 +20,67 @@ export default function QuestionScreen() {
   const { formatted } = useTimer(state.globalStartTime, true);
   const { playCorrect, playWrong } = useSound();
 
+  const randomizedQuestion = useMemo(() => {
+    if (!question || question.tipo !== 'opciones' || !Array.isArray(question.opciones) || question.opciones.length === 0) {
+      return question;
+    }
+
+    const entries = question.opciones.reduce<{ text: string; originalIndex: number }[]>((acc, opt, index) => {
+      if (typeof opt !== 'string') {
+        return acc;
+      }
+
+      const text = opt.replace(/^[A-Z]\)\s*/, '').trim();
+      acc.push({ text, originalIndex: index });
+      return acc;
+    }, []);
+
+    if (entries.length !== question.opciones.length) {
+      return question;
+    }
+
+    let seed = state.globalStartTime || Date.now();
+    seed += state.questionIndex * 37;
+    let a = Math.floor(seed % 2147483647);
+    if (a <= 0) a += 2147483646;
+
+    const random = () => {
+      a = Math.imul(a, 16807) % 2147483647;
+      return (a - 1) / 2147483646;
+    };
+
+    const shuffled = [...entries];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    const validShuffled = shuffled.every(
+      (item): item is { text: string; originalIndex: number } => !!item && typeof item.text === 'string'
+    )
+      ? shuffled
+      : [];
+
+    if (validShuffled.length !== shuffled.length) {
+      return question;
+    }
+
+    const correctIndex = typeof question.correcta === 'number' ? question.correcta : 0;
+    const newCorrectIndex = validShuffled.findIndex((entry) => entry.originalIndex === correctIndex);
+
+    if (newCorrectIndex < 0) {
+      return question;
+    }
+
+    return {
+      ...question,
+      opciones: validShuffled.map((item, index) => `${String.fromCharCode(65 + index)}) ${item.text ?? ''}`),
+      correcta: newCorrectIndex,
+    };
+  }, [question, state.globalStartTime, state.questionIndex]);
+
   const phaseInfo = PHASE_INFO[state.phase];
-  const isFinal = state.phase === 'final';
+  const isOpenQuestion = randomizedQuestion?.tipo === 'abierta';
 
   // Reset selection on question change
   useEffect(() => {
@@ -37,15 +97,14 @@ export default function QuestionScreen() {
     setConfirmed(true);
     const timeTakenMs = Date.now() - questionStartRef.current;
 
-    if (isFinal) {
-      // Open question – always passes
+    if (isOpenQuestion) {
       dispatch({ type: 'SUBMIT_OPEN_ANSWER', payload: { timeTakenMs } });
       return;
     }
 
     if (selectedIndex === null) return;
 
-    if (selectedIndex === question.correcta) {
+    if (selectedIndex === randomizedQuestion?.correcta) {
       playCorrect();
       dispatch({ type: 'ANSWER_CORRECT', payload: { timeTakenMs } });
     } else {
@@ -54,7 +113,7 @@ export default function QuestionScreen() {
     }
   };
 
-  const canConfirm = isFinal ? openText.trim().length > 10 : selectedIndex !== null;
+  const canConfirm = isOpenQuestion ? openText.trim().length > 10 : selectedIndex !== null;
 
   return (
     <div className="min-h-screen flex flex-col px-4 py-6"
@@ -62,7 +121,7 @@ export default function QuestionScreen() {
 
       {/* Top bar */}
       <div className="w-full max-w-2xl mx-auto flex items-center justify-between mb-2">
-        <span className="text-slate-500 text-sm font-medium">{state.playerName}</span>
+        <span className="text-slate-200 text-base sm:text-base font-semibold">{getNameWithGenderEmoji(state.playerName)}</span>
         <GlobalTimer formatted={formatted} hasBonus={state.penaltyMs > 0} />
       </div>
 
@@ -96,18 +155,18 @@ export default function QuestionScreen() {
               </div>
             )}
 
-            {isFinal && question.instruccion && (
+            {isOpenQuestion && question.instruccion && (
               <p className="text-yellow-400/80 text-sm italic mb-4 border-l-2 border-yellow-400/40 pl-3">
                 {question.instruccion}
               </p>
             )}
 
-            <p className="text-white text-xl sm:text-2xl font-bold leading-snug mb-6">
+            <p className="text-white text-base sm:text-lg font-bold leading-snug mb-5">
               {question.pregunta}
             </p>
 
             {/* Options or Open answer */}
-            {isFinal ? (
+            {isOpenQuestion ? (
               <textarea
                 value={openText}
                 onChange={(e) => setOpenText(e.target.value)}
@@ -121,7 +180,7 @@ export default function QuestionScreen() {
             ) : (
               <div className="flex flex-col gap-3">
                 <AnimatePresence>
-                  {question.opciones?.map((opt, i) => (
+                  {randomizedQuestion?.opciones?.map((opt, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, y: 25, scale: 0.97 }}
@@ -154,7 +213,7 @@ export default function QuestionScreen() {
             whileHover={canConfirm && !confirmed ? { scale: 1.02 } : {}}
             whileTap={canConfirm && !confirmed ? { scale: 0.97 } : {}}
             aria-label="Confirmar respuesta"
-            className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-lg transition-all duration-300
+            className={`w-auto min-w-[180px] mx-auto flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all duration-300
               focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400
               ${canConfirm && !confirmed
                 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400 text-slate-900 shadow-lg shadow-yellow-900/30 cursor-pointer'
